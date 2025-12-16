@@ -40,6 +40,9 @@ build/
 ### VS Code ###
 .vscode/
 
+### Test Directory ###
+agent-hub-app/src/test/
+
 ### Mac OS ###
 .DS_Store
 
