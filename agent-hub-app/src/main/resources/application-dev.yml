@@ -56,9 +56,10 @@ spring:
   ai:
     openai:
       base-url: https://apis.itedus.cn
-      api-key: sk-63b2LihHwKXMjCFQB3C501FeD20b47F68a7270992eC47d02 # todo 后续正式测试时 需要去购买
-      completions-path: v1/chat/completions # todo 后续配置的时候需要注意
-      embeddings-path: v1/embeddings # todo 后续配置的时候需要注意
+      api-key: sk-Vb7vnKNtGFAsKGhz6765DfE3F1974908Bb6650D7169d5aD7
+    agent:
+      auto-config:
+        enabled: true
 
 # MyBatis 配置【如需使用记得打开】
 mybatis:
