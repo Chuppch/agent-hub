@@ -1,20 +1,19 @@
 # 命令执行 docker-compose -f docker-compose-environment-aliyun.yml up -d
 # docker 代理和使用文档；https://bugstack.cn/md/road-map/docker.html
-version: '3.9'
 services:
   mysql:
     image: registry.cn-hangzhou.aliyuncs.com/xfg-studio/mysql:8.0.32
-    container_name: mysql
+    container_name: agent-hub-mysql
     command: --default-authentication-plugin=mysql_native_password
     restart: always
     environment:
       TZ: Asia/Shanghai
       MYSQL_ROOT_PASSWORD: 123456
     ports:
-      - "13306:3306"
+      - "20001:3306"
     volumes:
-      - ./mysql/my.cnf:/etc/mysql/conf.d/mysql.cnf:ro
-      - ./mysql/sql:/docker-entrypoint-initdb.d
+      - ../../mysql/my.cnf:/etc/mysql/conf.d/mysql.cnf:ro
+      - ../../mysql/sql:/docker-entrypoint-initdb.d
     healthcheck:
       test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
       interval: 5s
@@ -27,10 +26,10 @@ services:
   # phpmyadmin https://hub.docker.com/_/phpmyadmin
   phpmyadmin:
     image: registry.cn-hangzhou.aliyuncs.com/xfg-studio/phpmyadmin:5.2.1
-    container_name: phpmyadmin
+    container_name: agent-hub-phpmyadmin
     hostname: phpmyadmin
     ports:
-      - 8899:80
+      - 20002:80
     environment:
       - PMA_HOST=mysql
       - PMA_PORT=3306
@@ -44,15 +43,12 @@ services:
   # Redis
   redis:
     image: registry.cn-hangzhou.aliyuncs.com/xfg-studio/redis:6.2
-    container_name: redis
+    container_name: agent-hub-redis
     restart: always
     hostname: redis
     privileged: true
     ports:
-      - 16379:6379
-    volumes:
-      - ./redis/redis.conf:/usr/local/etc/redis/redis.conf
-    command: redis-server /usr/local/etc/redis/redis.conf
+      - 20003:6379
     networks:
       - my-network
     healthcheck:
@@ -65,11 +61,11 @@ services:
   # 账密 admin/admin
   redis-admin:
     image: registry.cn-hangzhou.aliyuncs.com/xfg-studio/redis-commander:0.8.0
-    container_name: redis-admin
+    container_name: agent-hub-redis-admin
     hostname: redis-commander
     restart: always
     ports:
-      - 8081:8081
+      - 20004:8081
     environment:
       - REDIS_HOSTS=local:redis:6379
       - HTTP_USER=admin
@@ -82,6 +78,47 @@ services:
     depends_on:
       redis:
         condition: service_healthy
+
+  # 软件；https://www.postgresql.org/ftp/pgadmin/pgadmin4
+  vector_db:
+    image: registry.cn-hangzhou.aliyuncs.com/xfg-studio/pgvector:v0.5.0
+    container_name: agent-hub-postgresql
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=ai-rag-knowledge
+      - PGPASSWORD=postgres
+    volumes:
+      - ../../pgvector/sql/init.sql:/docker-entrypoint-initdb.d/init.sql
+    logging:
+      options:
+        max-size: 10m
+        max-file: "3"
+    ports:
+      - '20005:5432'
+    healthcheck:
+      test: "pg_isready -U postgres -d ai-rag-knowledge"
+      interval: 2s
+      timeout: 20s
+      retries: 10
+    networks:
+      - my-network
+
+  # pg 管理工具
+  pgadmin:
+    image: registry.cn-hangzhou.aliyuncs.com/xfg-studio/pgadmin4:9.1.0
+    container_name: agent-hub-pgadmin
+    restart: always
+    ports:
+      - "20006:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@qq.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    depends_on:
+      - vector_db
+    networks:
+      - my-network
 
 networks:
   my-network:
