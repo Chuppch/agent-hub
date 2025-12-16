@@ -15,20 +15,36 @@ thread:
 # 数据库配置；启动时配置数据库资源信息
 spring:
   datasource:
-    username: postgres
-    password: postgres
-    url: jdbc:postgresql://101.251.176.123:20005/ai-rag-knowledge
-    driver-class-name: org.postgresql.Driver
-    type: com.zaxxer.hikari.HikariDataSource
-    hikari:
-      pool-name: Retail_HikariCP
-      minimum-idle: 15 #最小空闲连接数量
-      idle-timeout: 180000 #空闲连接存活最大时间，默认600000（10分钟）
-      maximum-pool-size: 25 #连接池最大连接数，默认是10
-      auto-commit: true  #此属性控制从池返回的连接的默认自动提交行为,默认值：true
-      max-lifetime: 1800000 #此属性控制池中连接的最长生命周期，值0表示无限生命周期，默认1800000即30分钟
-      connection-timeout: 30000 #数据库连接超时时间,默认30秒，即30000
-      connection-test-query: SELECT 1
+    # MySQL 配置（业务数据库）- 端口 20001
+    mysql:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://101.251.176.123:20001/ai-agent-station-study?useUnicode=true&characterEncoding=utf8mb4&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+      username: root
+      password: 123456
+      hikari:
+        pool-name: Retail_HikariCP
+        maximum-pool-size: 10
+        minimum-idle: 5
+        idle-timeout: 30000
+        connection-timeout: 30000
+        max-lifetime: 1800000
+        auto-commit: true
+        connection-test-query: SELECT 1
+    # PostgreSQL 配置（向量数据库）- 端口 20005
+    pgvector:
+      driver-class-name: org.postgresql.Driver
+      url: jdbc:postgresql://101.251.176.123:20005/ai-rag-knowledge
+      username: postgres
+      password: postgres
+      hikari:
+        pool-name: PgVectorHikariPool
+        maximum-pool-size: 5
+        minimum-idle: 2
+        idle-timeout: 30000
+        connection-timeout: 30000
+        max-lifetime: 1800000
+        auto-commit: true
+        connection-test-query: SELECT 1
   # Redis 配置
   data:
     redis:
@@ -40,12 +56,14 @@ spring:
   ai:
     openai:
       base-url: https://apis.itedus.cn
-      api-key: sk-63b2LihHwKXMjCFQB3C501FeD20b47F68a7270992eC47d02
+      api-key: sk-63b2LihHwKXMjCFQB3C501FeD20b47F68a7270992eC47d02 # todo 后续正式测试时 需要去购买
+      completions-path: v1/chat/completions # todo 后续配置的时候需要注意
+      embeddings-path: v1/embeddings # todo 后续配置的时候需要注意
 
 # MyBatis 配置【如需使用记得打开】
-#mybatis:
-#  mapper-locations: classpath:/mybatis/mapper/*.xml
-#  config-location:  classpath:/mybatis/config/mybatis-config.xml
+mybatis:
+ mapper-locations: classpath:/mybatis/mapper/*.xml
+ config-location:  classpath:/mybatis/config/mybatis-config.xml
 
 # 日志
 logging:
