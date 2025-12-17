@@ -24,7 +24,7 @@ import java.util.concurrent.TimeoutException;
 public abstract class AbstractArmorySupport extends AbstractMultiThreadStrategyRouter<ArmoryCommandEntity, DefaultArmoryStrategyFactory.DynamicContext, String> {
 
     // 自定义日志配置器 - 允许自定义配置
-    private final Logger log = LoggerFactory.getLogger(AbstractArmorySupport.class);
+    public final Logger log = LoggerFactory.getLogger(AbstractArmorySupport.class);
 
     // Spring上下文
     @Resource
@@ -43,6 +43,13 @@ public abstract class AbstractArmorySupport extends AbstractMultiThreadStrategyR
         // 缺省的
     }
 
+    /**
+     * 根据业务ID生成Bean名称
+     * 子类需要重写此方法，返回格式：{beanNameTag}{id}
+     *
+     * @param id 业务ID
+     * @return Bean名称
+     */
     protected String beanName(String id) {
         return null;
     }
