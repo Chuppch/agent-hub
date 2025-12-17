@@ -51,7 +51,7 @@ public class AiClientToolMcpNode extends AbstractArmorySupport {
 
     @Override
     public StrategyHandler<ArmoryCommandEntity, DefaultArmoryStrategyFactory.DynamicContext, String> get(ArmoryCommandEntity armoryCommandEntity, DefaultArmoryStrategyFactory.DynamicContext dynamicContext) throws Exception {
-        return null;
+        return aiClientModelNode;
     }
 
     // 根据MCP ID生成Bean名称
