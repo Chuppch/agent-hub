@@ -30,7 +30,14 @@ public class DefaultArmoryStrategyFactory {
         return rootNode;
     }
 
-
+    /**
+     * 动态上下文对象
+     * <p>
+     * 用于在策略处理器执行过程中传递和共享上下文数据。
+     * 通过键值对的方式存储任意类型的数据，支持策略链中不同节点之间的数据传递。
+     * </p>
+     *
+     */
     @Data
     @Builder
     @AllArgsConstructor
