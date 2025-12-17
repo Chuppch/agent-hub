@@ -47,11 +47,11 @@ public class DefaultArmoryStrategyFactory {
         // 统一上下文传递对象的数据格式
         private Map<String, Object> dataObjects = new HashMap<>();
 
-        private <T> void setValue(String key, T value) {
+        public <T> void setValue(String key, T value) {
             dataObjects.put(key, value);
         }
 
-        private <T> T getValue(String key) {
+        public <T> T getValue(String key) {
             return (T) dataObjects.get(key);
         }
     }

@@ -18,7 +18,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * @author chuppch
- * @description
+ * @description AI客户端配置数据加载策略
  * @create 2025/12/16
  */
 @Slf4j
@@ -74,14 +74,21 @@ public class AiClientLoadDataStrategy implements ILoadDataStrategy {
             return repository.AiClientVOByClientIds(clientIdList);
         }, threadPoolExecutor);
 
-        CompletableFuture.allOf(aiClientApiListFuture).thenRun(() -> {
+        // 等待所有 Future 完成并设置到上下文
+        CompletableFuture.allOf(
+                aiClientApiListFuture,
+                aiClientModelListFuture,
+                aiClientToolMcpListFuture,
+                aiClientSystemPromptListFuture,
+                aiClientAdvisorListFuture,
+                aiClientListFuture
+        ).thenRun(() -> {
             dynamicContext.setValue(AiAgentEnumVO.AI_CLIENT_API.getDataName(), aiClientApiListFuture.join());
             dynamicContext.setValue(AiAgentEnumVO.AI_CLIENT_MODEL.getDataName(), aiClientModelListFuture.join());
             dynamicContext.setValue(AiAgentEnumVO.AI_CLIENT_SYSTEM_PROMPT.getDataName(), aiClientSystemPromptListFuture.join());
             dynamicContext.setValue(AiAgentEnumVO.AI_CLIENT_TOOL_MCP.getDataName(), aiClientToolMcpListFuture.join());
             dynamicContext.setValue(AiAgentEnumVO.AI_CLIENT_ADVISOR.getDataName(), aiClientAdvisorListFuture.join());
             dynamicContext.setValue(AiAgentEnumVO.AI_CLIENT.getDataName(), aiClientListFuture.join());
-
         }).join();
 
     }

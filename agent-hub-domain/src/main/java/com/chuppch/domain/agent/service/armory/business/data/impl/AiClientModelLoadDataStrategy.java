@@ -4,6 +4,7 @@ import com.chuppch.domain.agent.adapter.repository.IAgentRepository;
 import com.chuppch.domain.agent.model.entity.ArmoryCommandEntity;
 import com.chuppch.domain.agent.model.valobj.AiClientApiVO;
 import com.chuppch.domain.agent.model.valobj.AiClientModelVO;
+import com.chuppch.domain.agent.model.valobj.enums.AiAgentEnumVO;
 import com.chuppch.domain.agent.service.armory.business.data.ILoadDataStrategy;
 import com.chuppch.domain.agent.service.armory.node.factory.DefaultArmoryStrategyFactory;
 import jakarta.annotation.Resource;
@@ -16,7 +17,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * @author chuppch
- * @description
+ * @description AI客户端模型配置数据加载策略
  * @create 2025/12/16
  */
 @Slf4j
@@ -46,5 +47,10 @@ public class AiClientModelLoadDataStrategy implements ILoadDataStrategy {
             return repository.AiClientModelVOByModelIds(modelIdList);
         }, threadPoolExecutor);
 
+        // 等待所有 Future 完成并设置到上下文
+        CompletableFuture.allOf(aiClientApiListFuture, aiClientModelListFuture).thenRun(() -> {
+            dynamicContext.setValue(AiAgentEnumVO.AI_CLIENT_API.getDataName(), aiClientApiListFuture.join());
+            dynamicContext.setValue(AiAgentEnumVO.AI_CLIENT_MODEL.getDataName(), aiClientModelListFuture.join());
+        }).join();
     }
 }

@@ -16,7 +16,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * @author chuppch
- * @description
+ * @description AI客户端API配置数据加载策略
  * @create 2025/12/17
  */
 @Slf4j
