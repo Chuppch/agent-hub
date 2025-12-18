@@ -1,6 +1,7 @@
 package com.chuppch.domain.agent.service.armory.node;
 
 import cn.bugstack.wrench.design.framework.tree.AbstractMultiThreadStrategyRouter;
+import com.chuppch.domain.agent.adapter.repository.IAgentRepository;
 import com.chuppch.domain.agent.model.entity.ArmoryCommandEntity;
 import com.chuppch.domain.agent.service.armory.node.factory.DefaultArmoryStrategyFactory;
 
@@ -35,8 +36,8 @@ public abstract class AbstractArmorySupport extends AbstractMultiThreadStrategyR
     protected ThreadPoolExecutor threadPoolExecutor;
 
     // 仓储 - todo 完善
-    //@Resource
-    //protected IAgentRepository repository;
+    @Resource
+    protected IAgentRepository repository;
 
     @Override
     protected void multiThread(ArmoryCommandEntity requestParameter, DefaultArmoryStrategyFactory.DynamicContext dynamicContext) throws ExecutionException, InterruptedException, TimeoutException {
