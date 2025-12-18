@@ -1,9 +1,13 @@
 package com.chuppch.domain.agent.model.valobj;
 
+import com.chuppch.domain.agent.model.valobj.enums.AiAgentEnumVO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author chuppch
@@ -17,28 +21,57 @@ import lombok.NoArgsConstructor;
 public class AiClientVO {
 
     /**
-     * API ID
+     * 客户端ID
      */
-    private String apiId;
+    private String clientId;
 
     /**
-     * 基础URL
+     * 客户端名称
      */
-    private String baseUrl;
+    private String clientName;
 
     /**
-     * API密钥
+     * 描述
      */
-    private String apiKey;
+    private String description;
 
     /**
-     * 对话补全路径
+     * 全局唯一模型ID
      */
-    private String completionsPath;
+    private String modelId;
 
     /**
-     * 嵌入向量路径
+     * Prompt ID List
      */
-    private String embeddingsPath;
+    private List<String> promptIdList;
 
+    /**
+     * MCP ID List
+     */
+    private List<String> mcpIdList;
+
+    /**
+     * 顾问ID List
+     */
+    private List<String> advisorIdList;
+
+    public String getModelBeanName() {
+        return AiAgentEnumVO.AI_CLIENT_MODEL.getBeanName(modelId);
+    }
+
+    public List<String> getMcpBeanNameList() {
+        List<String> mcpBeanNameList = new ArrayList<>();
+        for (String mcpId : mcpIdList) {
+            mcpBeanNameList.add(AiAgentEnumVO.AI_CLIENT_TOOL_MCP.getBeanName(mcpId));
+        }
+        return mcpBeanNameList;
+    }
+
+    public List<String> getAdvisorBeanNameList() {
+        List<String> advisorBeanNameList = new ArrayList<>();
+        for (String advisorId : advisorIdList) {
+            advisorBeanNameList.add(AiAgentEnumVO.AI_CLIENT_ADVISOR.getBeanName(advisorId));
+        }
+        return advisorBeanNameList;
+    }
 }
