@@ -19,26 +19,87 @@ public interface IAgentRepository {
 
     // ============ AiClientLoadDataStrategy - 数据库操作 ============
 
+    /**
+     * 根据客户端ID列表，查询对应的 Api 信息（只返回已启用的 API）
+     *
+     * @param clientIdList 客户端ID列表
+     * @return Api信息VO列表
+     */
     List<AiClientApiVO> queryAiClientApiVOListByClientIds(List<String> clientIdList);
 
+    /**
+     * 根据客户端ID列表，查询对应的模型信息（只返回已启用的模型）
+     *
+     * @param clientIdList 客户端ID列表
+     * @return 模型信息VO列表
+     */
     List<AiClientModelVO> AiClientModelVOByClientIds(List<String> clientIdList);
 
+    /**
+     * 根据客户端ID列表，查询对应的工具信息（只返回已启用的工具）
+     *
+     * @param clientIdList 客户端ID列表
+     * @return 工具信息VO列表
+     */
     List<AiClientToolMcpVO> AiClientToolMcpVOByClientIds(List<String> clientIdList);
 
+    /**
+     * 根据客户端ID列表，查询对应的系统提示信息（只返回已启用的系统提示）
+     *
+     * @param clientIdList 客户端ID列表
+     * @return 系统提示信息VO列表
+     */
     Map<String, AiClientSystemPromptVO> queryAiClientSystemPromptMapByClientIds(List<String> clientIdList);
 
+    /**
+     * 根据客户端ID列表，查询对应的顾问信息（只返回已启用的顾问）
+     *
+     * @param clientIdList 客户端ID列表
+     * @return 顾问信息VO列表
+     */
     List<AiClientAdvisorVO> AiClientAdvisorVOByClientIds(List<String> clientIdList);
 
+    /**
+     * 根据客户端ID列表，查询对应的客户端信息（只返回已启用的客户端）
+     *
+     * @param clientIdList 客户端ID列表
+     * @return 客户端信息VO列表
+     */
     List<AiClientVO> AiClientVOByClientIds(List<String> clientIdList);
 
     // ============ AiClientModelLoadDataStrategy - 数据库操作 ============
 
+    /**
+     * 根据模型ID列表，查询对应的 Api 信息（只返回已启用的 API）
+     * @param modelIdList
+     * @return
+     */
     List<AiClientApiVO> queryAiClientApiVOListByModelIds(List<String> modelIdList);
 
+    /**
+     * 根据模型ID列表，查询对应的模型信息（只返回已启用的模型）
+     * @param modelIdList
+     * @return
+     */
     List<AiClientModelVO> AiClientModelVOByModelIds(List<String> modelIdList);
 
     // ============ ArmoryService - 数据库操作 ============
-    List<AiAgentClientFlowConfigVO> queryAiAgentClientsByAgentId(String agentId);
 
+    /**
+      * 根据代理ID，查询对应的客户端信息（只返回已启用的客户端）
+      * @param agentId
+      * @return
+      */
+    List<AiAgentClientFlowConfigVO> queryAiAgentClientsByAgentId(String aiAgentId);
+
+    /**
+      * 查询所有可用的代理
+      * @return
+      */
     List<AiAgentVO> queryAvailableAgents();
+
+    // ============ 额外 - 数据库操作 ============
+
+    List<AiClientSystemPromptVO> AiClientSystemPromptVOByClientIds(List<String> clientIdList);
+
 }
