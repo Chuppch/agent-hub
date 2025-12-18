@@ -39,4 +39,6 @@ public interface IAgentRepository {
 
     // ============ ArmoryService - 数据库操作 ============
     List<AiAgentClientFlowConfigVO> queryAiAgentClientsByAgentId(String agentId);
+
+    List<AiAgentVO> queryAvailableAgents();
 }

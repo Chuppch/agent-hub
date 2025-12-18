@@ -28,7 +28,15 @@ public class ArmoryService implements IArmoryService {
 
     @Override
     public List<AiAgentVO> acceptArmoryAllAvailableAgents() {
-        return List.of();
+        // 获取所有可用的智能体
+        List<AiAgentVO> aiAgentVOS = repository.queryAvailableAgents();
+
+        // 循环装配智能体
+        for (AiAgentVO aiAgentVO : aiAgentVOS) {
+            String agentId = aiAgentVO.getAgentId();
+            acceptArmoryAgent(agentId);
+        }
+        return aiAgentVOS;
     }
 
     @Override
