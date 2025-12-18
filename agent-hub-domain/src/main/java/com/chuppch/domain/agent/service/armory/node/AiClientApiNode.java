@@ -18,7 +18,7 @@ import java.util.List;
  * @create 2025/12/17
  */
 
-@Service
+@Service("aiClientApiNode")
 public class AiClientApiNode extends AbstractArmorySupport {
 
     @Resource

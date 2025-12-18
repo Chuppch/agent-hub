@@ -17,7 +17,7 @@ import java.util.concurrent.TimeoutException;
  * @description 根节点，数据加载
  * @create 2025/12/16
  */
-@Service("aiClientModelLoadDataStrategy")
+@Service("rootNode")
 public class RootNode extends AbstractArmorySupport{
 
     // 初始化策略

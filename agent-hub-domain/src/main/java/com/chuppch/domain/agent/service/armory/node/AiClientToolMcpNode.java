@@ -13,6 +13,7 @@ import io.modelcontextprotocol.client.transport.ServerParameters;
 import io.modelcontextprotocol.client.transport.StdioClientTransport;
 import jakarta.annotation.Resource;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.util.List;
@@ -23,6 +24,7 @@ import java.util.Map;
  * @description
  * @create 2025/12/17
  */
+@Service("aiClientToolMcpNode")
 public class AiClientToolMcpNode extends AbstractArmorySupport {
 
     @Resource

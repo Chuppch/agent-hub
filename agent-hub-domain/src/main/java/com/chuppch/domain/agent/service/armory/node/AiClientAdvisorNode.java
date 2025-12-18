@@ -10,6 +10,7 @@ import com.chuppch.domain.agent.service.armory.node.factory.DefaultArmoryStrateg
 import jakarta.annotation.Resource;
 import org.springframework.ai.chat.client.advisor.api.Advisor;
 import org.springframework.ai.vectorstore.VectorStore;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -18,6 +19,7 @@ import java.util.List;
  * @description
  * @create 2025/12/17
  */
+@Service("aiClientAdvisorNode")
 public class AiClientAdvisorNode extends AbstractArmorySupport{
 
     @Resource
@@ -44,7 +46,7 @@ public class AiClientAdvisorNode extends AbstractArmorySupport{
             registerBean(beanName(aiClientAdvisorVO.getAdvisorId()), Advisor.class, advisor);
         }
 
-        return "";
+        return router(requestParameter, dynamicContext);
     }
 
     @Override
