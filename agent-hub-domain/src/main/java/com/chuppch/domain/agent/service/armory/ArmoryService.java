@@ -9,7 +9,9 @@ import com.chuppch.domain.agent.model.valobj.enums.AiAgentEnumVO;
 import com.chuppch.domain.agent.service.IArmoryService;
 import com.chuppch.domain.agent.service.armory.node.factory.DefaultArmoryStrategyFactory;
 import jakarta.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,6 +20,7 @@ import java.util.stream.Collectors;
  * @description
  * @create 2025/12/16
  */
+@Slf4j
 public class ArmoryService implements IArmoryService {
 
     @Resource
@@ -47,7 +50,7 @@ public class ArmoryService implements IArmoryService {
         }
 
         // 获取命令ID列表
-        List<String> commadIdList = aiAgentClientFlowConfigVOS.stream()
+        List<String> commandIdList = aiAgentClientFlowConfigVOS.stream()
                 .map(AiAgentClientFlowConfigVO::getClientId)
                 .collect(Collectors.toList());
 
@@ -58,8 +61,8 @@ public class ArmoryService implements IArmoryService {
 
             armoryStrategyHandler.apply(
                     ArmoryCommandEntity.builder()
-                            .commandType(AiAgentEnumVO.AI_CLIENT.getCode())
-                            .commandIdList(commadIdList)
+                            .commandType(AiAgentEnumVO.AI_CLIENT.getCode()) // 区分不同策略的关键 - 执行 AI_CLIENT 策略
+                            .commandIdList(commandIdList)
                             .build(),
                     new DefaultArmoryStrategyFactory.DynamicContext());
         } catch (Exception e) {
@@ -69,11 +72,24 @@ public class ArmoryService implements IArmoryService {
 
     @Override
     public List<AiAgentVO> queryAvailableAgents() {
-        return List.of();
+        return repository.queryAvailableAgents();
     }
 
     @Override
-    public void acceptArmoryAgentClientModelApi(String agentId) {
+    public void acceptArmoryAgentClientModelApi(String apiId) {
+        try {
+            StrategyHandler<ArmoryCommandEntity, DefaultArmoryStrategyFactory.DynamicContext, String> armoryStrategyHandler =
+                    defaultArmoryStrategyFactory.armoryStrategyHandler();
 
+            armoryStrategyHandler.apply(
+                    ArmoryCommandEntity.builder()
+                            .commandType(AiAgentEnumVO.AI_CLIENT_API.getCode()) // 区分不同策略的关键 - 执行 AI_CLIENT_API 策略
+                            .commandIdList(Collections.singletonList(apiId)) //  这里使用 singletonList 可以节约内存
+                            .build(),
+                    new DefaultArmoryStrategyFactory.DynamicContext()
+            );
+        } catch (Exception e) {
+            throw new RuntimeException("装配智能体 API 失败",e);
+        }
     }
 }
