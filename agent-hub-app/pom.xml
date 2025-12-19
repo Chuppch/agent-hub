@@ -79,12 +79,37 @@
             <version>2.9.0</version>
         </dependency>
 
-        <!-- Spring AI v1.0.0 start -->
-        <!-- OpenAI 模型支持：提供与 OpenAI API 集成的 ChatModel、EmbeddingModel 等 -->
+        <!-- spring ai 框架 begin -->
         <dependency>
             <groupId>org.springframework.ai</groupId>
             <artifactId>spring-ai-starter-model-openai</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>org.springframework.ai</groupId>
+            <artifactId>spring-ai-starter-mcp-client</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.ai</groupId>
+            <artifactId>spring-ai-tika-document-reader</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.ai</groupId>
+            <artifactId>spring-ai-vector-store</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.ai</groupId>
+            <artifactId>spring-ai-pgvector-store</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.ai</groupId>
+            <artifactId>spring-ai-starter-mcp-client-webflux</artifactId>
+        </dependency>
+        <!-- spring ai 框架 end -->
 
         <!-- PgVector 向量数据库支持：提供向量存储和相似度搜索功能，用于 RAG 检索增强生成 -->
         <dependency>

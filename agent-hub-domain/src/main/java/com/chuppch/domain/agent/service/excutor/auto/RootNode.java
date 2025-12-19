@@ -45,6 +45,6 @@ public class RootNode extends AbstractExecuteSupport{
 
     @Override
     public StrategyHandler<ExecuteCommandEntity, DefaultAutoAgentExecuteStrategyFactory.DynamicContext, String> get(ExecuteCommandEntity executeCommandEntity, DefaultAutoAgentExecuteStrategyFactory.DynamicContext dynamicContext) throws Exception {
-        return null;
+        return step1AnalyzerNode;
     }
 }

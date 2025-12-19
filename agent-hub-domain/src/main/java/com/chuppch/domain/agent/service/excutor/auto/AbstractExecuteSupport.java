@@ -33,7 +33,12 @@ public abstract class AbstractExecuteSupport extends AbstractMultiThreadStrategy
     protected ApplicationContext applicationContext;
 
     @Resource
-    private IAgentRepository repository;
+    public IAgentRepository repository;
+
+    /** 聊天记忆会话ID键名，用于标识不同的对话会话 */
+    public static final String CHAT_MEMORY_CONVERSATION_ID_KEY = "chat_memory_conversation_id";
+    /** 聊天记忆检索窗口大小键名，用于设置检索的历史消息数量 */
+    public static final String CHAT_MEMORY_RETRIEVE_SIZE_KEY = "chat_memory_response_size";
 
     @Override
     protected void multiThread(ExecuteCommandEntity executeCommandEntity, DefaultAutoAgentExecuteStrategyFactory.DynamicContext dynamicContext) throws ExecutionException, InterruptedException, TimeoutException {
