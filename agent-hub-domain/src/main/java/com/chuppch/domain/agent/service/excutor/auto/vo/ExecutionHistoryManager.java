@@ -1,4 +1,4 @@
-package com.chuppch.domain.agent.service.excutor.auto.VO;
+package com.chuppch.domain.agent.service.excutor.auto.vo;
 
 
 import java.util.ArrayDeque;

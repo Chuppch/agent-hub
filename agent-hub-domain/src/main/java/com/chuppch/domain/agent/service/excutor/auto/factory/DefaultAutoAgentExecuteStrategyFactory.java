@@ -4,7 +4,7 @@ import cn.bugstack.wrench.design.framework.tree.StrategyHandler;
 import com.chuppch.domain.agent.model.entity.ExecuteCommandEntity;
 import com.chuppch.domain.agent.model.valobj.AiAgentClientFlowConfigVO;
 import com.chuppch.domain.agent.service.excutor.auto.RootNode;
-import com.chuppch.domain.agent.service.excutor.auto.VO.ExecutionHistoryManager;
+import com.chuppch.domain.agent.service.excutor.auto.vo.ExecutionHistoryManager;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

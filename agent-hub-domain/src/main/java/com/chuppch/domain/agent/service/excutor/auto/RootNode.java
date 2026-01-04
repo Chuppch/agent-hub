@@ -3,7 +3,7 @@ package com.chuppch.domain.agent.service.excutor.auto;
 import cn.bugstack.wrench.design.framework.tree.StrategyHandler;
 import com.chuppch.domain.agent.model.entity.ExecuteCommandEntity;
 import com.chuppch.domain.agent.model.valobj.AiAgentClientFlowConfigVO;
-import com.chuppch.domain.agent.service.excutor.auto.VO.ExecutionHistoryManager;
+import com.chuppch.domain.agent.service.excutor.auto.vo.ExecutionHistoryManager;
 import com.chuppch.domain.agent.service.excutor.auto.factory.DefaultAutoAgentExecuteStrategyFactory;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
