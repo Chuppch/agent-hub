@@ -33,18 +33,20 @@ spring:
     # PostgreSQL 配置（向量数据库）- 端口 20005
     pgvector:
       driver-class-name: org.postgresql.Driver
-      url: jdbc:postgresql://101.251.176.123:20005/ai-rag-knowledge
+      url: jdbc:postgresql://101.251.176.123:20005/ai-rag-knowledge?tcpKeepAlive=true&socketTimeout=60
       username: postgres
       password: postgres
       hikari:
         pool-name: PgVectorHikariPool
         maximum-pool-size: 5
         minimum-idle: 2
-        idle-timeout: 30000
+        idle-timeout: 600000  # 改为 10 分钟（600000ms），避免空闲连接被断开
         connection-timeout: 30000
-        max-lifetime: 1800000
+        max-lifetime: 1800000  # 30 分钟
         auto-commit: true
         connection-test-query: SELECT 1
+        validation-timeout: 5000  # 连接验证超时
+        leak-detection-threshold: 60000  # 连接泄漏检测阈值（60秒）
   # Redis 配置
   data:
     redis:
@@ -55,11 +57,18 @@ spring:
       database: 0
   ai:
     openai:
-      base-url: https://apis.itedus.cn
-      api-key: sk-Vb7vnKNtGFAsKGhz6765DfE3F1974908Bb6650D7169d5aD7
+      base-url: https://dashscope.aliyuncs.com/compatible-mode  # 改为阿里百炼，不包含 /v1
+      api-key: sk-cb3fa344c3cc495d95a34d2cc9c67280
+      embedding:
+        options:
+          model: text-embedding-v4
     agent:
       auto-config:
         enabled: true
+    # 禁用 PgVectorStore 自动配置，使用手动配置的 Bean（使用 vector_store_openai 表）
+    vectorstore:
+      pgvector:
+        enabled: false
 
 # MyBatis 配置【如需使用记得打开】
 mybatis:

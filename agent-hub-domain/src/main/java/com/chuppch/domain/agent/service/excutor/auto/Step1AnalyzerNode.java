@@ -23,7 +23,7 @@ public class Step1AnalyzerNode extends AbstractExecuteSupport{
     protected String doApply(ExecuteCommandEntity requestParameter, DefaultAutoAgentExecuteStrategyFactory.DynamicContext dynamicContext) throws Exception {
         log.info("\n === 执行第 {} 步 ===", dynamicContext.getStep());
 
-        // 获取配置信息
+        // 根据客户端类型 - 获取配置信息
         AiAgentClientFlowConfigVO aiAgentClientFlowConfigVO = dynamicContext.getAiAgentClientFlowConfigVOMap().get(AiClientTypeEnumVO.TASK_ANALYZER_CLIENT.getCode());
 
         // 构建任务分析提示词
@@ -52,7 +52,7 @@ public class Step1AnalyzerNode extends AbstractExecuteSupport{
         // 解析分析结果 - 流式输出给前端
         parseAnalysisResult(dynamicContext, analysisResult, requestParameter.getSessionId());
 
-        // 将分析结果保存到动态上下文中，供下一步使用
+        // 将分析结果保存到动态上下文中，供下一步使用 - todo 需要以滑动窗口和分层存储进行优化
         dynamicContext.setValue("analysisResult", analysisResult);
 
         // 检查是否已经完成

@@ -14,7 +14,7 @@ import java.util.Map;
  * @description
  * @create 2025/12/19
  */
-@Service
+@Service("executeRootNode")  // 指定不同的 bean 名称，避免与 armory.node.RootNode 冲突
 public class RootNode extends AbstractExecuteSupport{
 
     @Resource

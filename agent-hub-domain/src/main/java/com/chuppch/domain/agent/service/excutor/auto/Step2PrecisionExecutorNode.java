@@ -25,6 +25,7 @@ public class Step2PrecisionExecutorNode extends AbstractExecuteSupport{
             analysisResult = "执行当前任务步骤";
         }
 
+        // 获取客户端配置
         AiAgentClientFlowConfigVO aiAgentClientFlowConfigVO = dynamicContext.getAiAgentClientFlowConfigVOMap().get(AiClientTypeEnumVO.PRECISION_EXECUTOR_CLIENT.getCode());
 
         // 构建执行提示词

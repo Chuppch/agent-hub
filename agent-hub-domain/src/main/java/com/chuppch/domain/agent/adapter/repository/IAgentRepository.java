@@ -102,4 +102,7 @@ public interface IAgentRepository {
 
     List<AiClientSystemPromptVO> AiClientSystemPromptVOByClientIds(List<String> clientIdList);
 
+    // ============ execute - RootNode 数据库操作============
+
+    Map<String, AiAgentClientFlowConfigVO> queryAiAgentClientFlowConfig(String aiAgentId);
 }
