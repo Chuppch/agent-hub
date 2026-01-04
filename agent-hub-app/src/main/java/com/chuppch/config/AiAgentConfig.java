@@ -1,14 +1,17 @@
 package com.chuppch.config;
 
 import org.springframework.ai.openai.OpenAiEmbeddingModel;
+import org.springframework.ai.openai.OpenAiEmbeddingOptions;
 import org.springframework.ai.openai.api.OpenAiApi;
 import org.springframework.ai.transformer.splitter.TokenTextSplitter;
 import org.springframework.ai.vectorstore.pgvector.PgVectorStore;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
+import org.springframework.ai.document.MetadataMode;
+
 import org.springframework.jdbc.core.JdbcTemplate;
 
 /**
@@ -21,9 +24,10 @@ public class AiAgentConfig {
 
     // 初始化向量存储
     @Bean("vectorStore")
-    @ConditionalOnBean(name = "pgVectorJdbcTemplate")
+    @Primary // 优先使用这个bean，避免覆盖问题
     public PgVectorStore pgVectorStore(@Value("${spring.ai.openai.base-url}") String baseUrl,
                                        @Value("${spring.ai.openai.api-key}") String apiKey,
+                                       @Value("${spring.ai.openai.embedding.options.model:text-embedding-v4}") String embeddingModelName,
                                        @Qualifier("pgVectorJdbcTemplate") JdbcTemplate jdbcTemplate) {
 
         OpenAiApi openAiApi = OpenAiApi.builder()
@@ -31,7 +35,18 @@ public class AiAgentConfig {
                 .apiKey(apiKey)
                 .build();
 
-        OpenAiEmbeddingModel embeddingModel = new OpenAiEmbeddingModel(openAiApi);
+        OpenAiEmbeddingOptions embeddingOptions = OpenAiEmbeddingOptions.builder()
+                .model(embeddingModelName)  // 指定模型名称：text-embedding-v4
+                .build();
+
+        OpenAiEmbeddingModel embeddingModel =
+            new OpenAiEmbeddingModel(
+                    openAiApi,
+                    MetadataMode.EMBED,
+                    embeddingOptions
+            ); 
+        
+        
         return PgVectorStore.builder(jdbcTemplate, embeddingModel)
                 .vectorTableName("vector_store_openai")
                 .build();

@@ -92,7 +92,9 @@ public class DataSourceConfig {
                                          @Value("${spring.datasource.pgvector.hikari.max-lifetime:1800000}") long maxLifetime,
                                          @Value("${spring.datasource.pgvector.hikari.pool-name:PgVectorHikariPool}") String poolName,
                                          @Value("${spring.datasource.pgvector.hikari.auto-commit:true}") boolean autoCommit,
-                                         @Value("${spring.datasource.pgvector.hikari.connection-test-query:SELECT 1}") String connectionTestQuery) {
+                                         @Value("${spring.datasource.pgvector.hikari.connection-test-query:SELECT 1}") String connectionTestQuery,
+                                         @Value("${spring.datasource.pgvector.hikari.validation-timeout:5000}") long validationTimeout,
+                                         @Value("${spring.datasource.pgvector.hikari.leak-detection-threshold:0}") long leakDetectionThreshold) {
 
         // 连接池配置
         HikariDataSource dataSource = new HikariDataSource();
@@ -109,6 +111,12 @@ public class DataSourceConfig {
         dataSource.setPoolName(poolName);
         dataSource.setAutoCommit(autoCommit);
         dataSource.setConnectionTestQuery(connectionTestQuery);
+        // 连接验证超时：验证连接是否有效时的超时时间
+        dataSource.setValidationTimeout(validationTimeout);
+        // 连接泄漏检测：如果连接在指定时间内未归还，记录警告日志（0表示禁用）
+        if (leakDetectionThreshold > 0) {
+            dataSource.setLeakDetectionThreshold(leakDetectionThreshold);
+        }
         // initializationFailTimeout: -1 表示不超时，0 表示立即失败，>0 表示超时时间（毫秒）
         // 设置为 1 秒（1000ms），如果连接失败则快速失败，避免启动时长时间等待
         dataSource.setInitializationFailTimeout(1000);
