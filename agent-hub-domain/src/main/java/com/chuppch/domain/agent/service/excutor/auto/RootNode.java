@@ -3,6 +3,7 @@ package com.chuppch.domain.agent.service.excutor.auto;
 import cn.bugstack.wrench.design.framework.tree.StrategyHandler;
 import com.chuppch.domain.agent.model.entity.ExecuteCommandEntity;
 import com.chuppch.domain.agent.model.valobj.AiAgentClientFlowConfigVO;
+import com.chuppch.domain.agent.service.excutor.auto.VO.ExecutionHistoryManager;
 import com.chuppch.domain.agent.service.excutor.auto.factory.DefaultAutoAgentExecuteStrategyFactory;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
@@ -32,8 +33,8 @@ public class RootNode extends AbstractExecuteSupport{
 
         // 客户端对话组
         dynamicContext.setAiAgentClientFlowConfigVOMap(aiAgentClientFlowConfigVOMap);
-        // 上下文信息
-        dynamicContext.setExecutionHistory(new StringBuilder());
+        // 上下文信息 - 初始化执行历史管理器
+        dynamicContext.setExecutionHistoryManager(new ExecutionHistoryManager());
         // 当前任务信息
         dynamicContext.setCurrentTask(requestParameter.getMessage());
         // 最大任务步骤

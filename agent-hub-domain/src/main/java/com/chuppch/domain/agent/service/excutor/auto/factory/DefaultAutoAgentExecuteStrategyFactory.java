@@ -4,6 +4,7 @@ import cn.bugstack.wrench.design.framework.tree.StrategyHandler;
 import com.chuppch.domain.agent.model.entity.ExecuteCommandEntity;
 import com.chuppch.domain.agent.model.valobj.AiAgentClientFlowConfigVO;
 import com.chuppch.domain.agent.service.excutor.auto.RootNode;
+import com.chuppch.domain.agent.service.excutor.auto.VO.ExecutionHistoryManager;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -43,8 +44,8 @@ public class DefaultAutoAgentExecuteStrategyFactory {
         /** 最大任务步骤数（防止无限循环） */
         private int maxStep = 1;
 
-        /** 执行历史记录（累积每轮的分析/执行/监督结果） */
-        private StringBuilder executionHistory;
+        /** 执行历史记录管理器（实现滑动窗口和分层存储） */
+        private ExecutionHistoryManager executionHistoryManager;
 
         /** 当前任务描述（根据质量监督反馈动态更新） */
         private String currentTask;

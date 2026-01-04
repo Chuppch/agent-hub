@@ -5,6 +5,7 @@ import com.chuppch.domain.agent.model.entity.AutoAgentExecuteResultEntity;
 import com.chuppch.domain.agent.model.entity.ExecuteCommandEntity;
 import com.chuppch.domain.agent.model.valobj.AiAgentClientFlowConfigVO;
 import com.chuppch.domain.agent.model.valobj.enums.AiClientTypeEnumVO;
+import com.chuppch.domain.agent.service.excutor.auto.VO.ExecutionHistoryManager;
 import com.chuppch.domain.agent.service.excutor.auto.factory.DefaultAutoAgentExecuteStrategyFactory;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.stereotype.Service;
@@ -23,7 +24,7 @@ public class Step4LogExecutionSummaryNode extends AbstractExecuteSupport
         log.info("\n 阶段4: 执行总结分析");
 
         // 记录执行总结
-        logExecutionSummary(dynamicContext.getMaxStep(), dynamicContext.getExecutionHistory(), dynamicContext.isCompleted());
+        logExecutionSummary(dynamicContext.getMaxStep(), dynamicContext.getExecutionHistoryManager(), dynamicContext.isCompleted());
 
         // 生成最终总结报告（无论任务是否完成都需要生成）
         generateFinalReport(requestParameter, dynamicContext);
@@ -41,10 +42,16 @@ public class Step4LogExecutionSummaryNode extends AbstractExecuteSupport
         return defaultStrategyHandler;
     }
 
-    private void logExecutionSummary(int maxSteps, StringBuilder executionHistory, boolean isCompleted) {
+    private void logExecutionSummary(int maxSteps, ExecutionHistoryManager executionHistoryManager, boolean isCompleted) {
         log.info("\n📊 === 动态多轮执行总结 ====");
 
-        int actualSteps = Math.min(maxSteps, executionHistory.toString().split("=== 第").length - 1);
+        // 注意：如果需要获取总步数，可以通过其他方式获取
+        // 因为 ExecutionHistoryManager 不暴露 totalSteps 字段
+        // 这里可以根据实际需求调整
+        String history = executionHistoryManager.getHistory();
+        int actualSteps = history.split("=== 第").length - 1;
+        if (actualSteps < 0) actualSteps = 0;
+        
         log.info("📈 总执行步数: {} 步", actualSteps);
 
         if (isCompleted) {
@@ -96,7 +103,7 @@ public class Step4LogExecutionSummaryNode extends AbstractExecuteSupport
         if (isCompleted) {
             summaryPrompt = String.format(aiAgentClientFlowConfigVO.getStepPrompt(),
                     requestParameter.getMessage(),
-                    dynamicContext.getExecutionHistory().toString());
+                    dynamicContext.getExecutionHistoryManager().getHistory());
         } else {
             summaryPrompt = String.format("""
                     虽然任务未完全执行完成，但请基于已有的执行过程，尽力回答用户的原始问题：
@@ -116,7 +123,7 @@ public class Step4LogExecutionSummaryNode extends AbstractExecuteSupport
                     请基于现有信息给出用户问题的答案：
                     """,
                     requestParameter.getMessage(),
-                    dynamicContext.getExecutionHistory().toString());
+                    dynamicContext.getExecutionHistoryManager().getHistory());
         }
         return summaryPrompt;
     }

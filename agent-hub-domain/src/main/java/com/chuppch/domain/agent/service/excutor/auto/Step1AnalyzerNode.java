@@ -32,7 +32,7 @@ public class Step1AnalyzerNode extends AbstractExecuteSupport{
                 requestParameter.getMessage(),
                 dynamicContext.getStep(),
                 dynamicContext.getMaxStep(),
-                !dynamicContext.getExecutionHistory().isEmpty() ? dynamicContext.getExecutionHistory().toString() : "[首次执行]",
+                dynamicContext.getExecutionHistoryManager().getHistory(),
                 dynamicContext.getCurrentTask()
         );
 
@@ -52,7 +52,7 @@ public class Step1AnalyzerNode extends AbstractExecuteSupport{
         // 解析分析结果 - 流式输出给前端
         parseAnalysisResult(dynamicContext, analysisResult, requestParameter.getSessionId());
 
-        // 将分析结果保存到动态上下文中，供下一步使用 - todo 需要以滑动窗口和分层存储进行优化
+        // 将分析结果保存到动态上下文中，供下一步使用
         dynamicContext.setValue("analysisResult", analysisResult);
 
         // 检查是否已经完成

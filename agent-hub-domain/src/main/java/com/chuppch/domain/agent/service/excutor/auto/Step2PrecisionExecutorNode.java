@@ -51,14 +51,8 @@ public class Step2PrecisionExecutorNode extends AbstractExecuteSupport{
 
         dynamicContext.setValue("executionResult", executionResult);
 
-        // 更新执行历史
-        String stepSummary = String.format("""
-                === 第 %d 步执行记录 ===
-                【分析阶段】%s
-                【执行阶段】%s
-                """, dynamicContext.getStep(), analysisResult, executionResult);
-
-        dynamicContext.getExecutionHistory().append(stepSummary);
+        // 注意：此阶段不追加历史记录
+        // 历史记录将在 Step3QualitySupervisorNode 中统一追加（包含完整的三个阶段结果）
 
         return router(requestParameter, dynamicContext);
     }

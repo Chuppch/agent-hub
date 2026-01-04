@@ -62,18 +62,13 @@ public class Step3QualitySupervisorNode extends AbstractExecuteSupport{
             dynamicContext.setCompleted(true);
         }
 
-        // 更新执行历史
-        String stepSummary = String.format("""
-                === 第 %d 步完整记录 ===
-                【分析阶段】%s
-                【执行阶段】%s
-                【监督阶段】%s
-                """, dynamicContext.getStep(),
+        // 更新执行历史 - 追加完整的三阶段结果
+        dynamicContext.getExecutionHistoryManager().appendStep(
+                dynamicContext.getStep(),
                 dynamicContext.getValue("analysisResult"),
                 executionResult,
-                supervisionResult);
-
-        dynamicContext.getExecutionHistory().append(stepSummary);
+                supervisionResult
+        );
 
         // 增加步骤计数
         dynamicContext.setStep(dynamicContext.getStep() + 1);
