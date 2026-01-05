@@ -100,9 +100,28 @@ public interface IAgentRepository {
 
     // ============ 额外 - 数据库操作 ============
 
+    /**
+      * 根据客户端ID列表，查询对应的系统提示信息（只返回已启用的系统提示）
+      * @param clientIdList
+      * @return
+      */
     List<AiClientSystemPromptVO> AiClientSystemPromptVOByClientIds(List<String> clientIdList);
 
     // ============ execute - RootNode 数据库操作============
 
+    /**
+      * 根据代理ID，查询对应的客户端流程配置信息
+      * @param aiAgentId
+      * @return
+      */
     Map<String, AiAgentClientFlowConfigVO> queryAiAgentClientFlowConfig(String aiAgentId);
+
+    // =========== AgentDispatchDispatchService ============
+
+    /**
+     * 根据代理ID，查询对应的agent信息
+     * @param aiAgentId
+     * @return
+     */
+    AiAgentVO queryAiAgentByAgentId(String aiAgentId);
 }

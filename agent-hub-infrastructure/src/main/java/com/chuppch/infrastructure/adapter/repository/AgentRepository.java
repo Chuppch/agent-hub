@@ -613,4 +613,20 @@ public class AgentRepository implements IAgentRepository {
         }
     }
 
+    // =========== AgentDispatchDispatchService ============
+
+    @Override
+    public AiAgentVO queryAiAgentByAgentId(String aiAgentId) {
+        AiAgent aiAgent = aiAgentDao.queryByAgentId(aiAgentId);
+
+        return AiAgentVO.builder()
+                .agentId(aiAgent.getAgentId())
+                .agentName(aiAgent.getAgentName())
+                .description(aiAgent.getDescription())
+                .channel(aiAgent.getChannel())
+                .strategy(aiAgent.getStrategy())
+                .status(aiAgent.getStatus())
+                .build();
+    }
+
 }
