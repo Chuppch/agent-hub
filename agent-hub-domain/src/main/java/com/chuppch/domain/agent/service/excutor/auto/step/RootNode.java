@@ -1,10 +1,10 @@
-package com.chuppch.domain.agent.service.excutor.auto;
+package com.chuppch.domain.agent.service.excutor.auto.step;
 
 import cn.bugstack.wrench.design.framework.tree.StrategyHandler;
 import com.chuppch.domain.agent.model.entity.ExecuteCommandEntity;
 import com.chuppch.domain.agent.model.valobj.AiAgentClientFlowConfigVO;
 import com.chuppch.domain.agent.service.excutor.auto.vo.ExecutionHistoryManager;
-import com.chuppch.domain.agent.service.excutor.auto.factory.DefaultAutoAgentExecuteStrategyFactory;
+import com.chuppch.domain.agent.service.excutor.auto.step.factory.DefaultAutoAgentExecuteStrategyFactory;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +16,7 @@ import java.util.Map;
  * @create 2025/12/19
  */
 @Service("executeRootNode")  // 指定不同的 bean 名称，避免与 armory.node.RootNode 冲突
-public class RootNode extends AbstractExecuteSupport{
+public class RootNode extends AbstractExecuteSupport {
 
     @Resource
     private Step1AnalyzerNode step1AnalyzerNode;

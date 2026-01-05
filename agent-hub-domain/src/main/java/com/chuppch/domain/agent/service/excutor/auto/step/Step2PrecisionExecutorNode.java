@@ -1,11 +1,11 @@
-package com.chuppch.domain.agent.service.excutor.auto;
+package com.chuppch.domain.agent.service.excutor.auto.step;
 
 import cn.bugstack.wrench.design.framework.tree.StrategyHandler;
 import com.chuppch.domain.agent.model.entity.AutoAgentExecuteResultEntity;
 import com.chuppch.domain.agent.model.entity.ExecuteCommandEntity;
 import com.chuppch.domain.agent.model.valobj.AiAgentClientFlowConfigVO;
 import com.chuppch.domain.agent.model.valobj.enums.AiClientTypeEnumVO;
-import com.chuppch.domain.agent.service.excutor.auto.factory.DefaultAutoAgentExecuteStrategyFactory;
+import com.chuppch.domain.agent.service.excutor.auto.step.factory.DefaultAutoAgentExecuteStrategyFactory;
 import org.springframework.ai.chat.client.ChatClient;
 
 /**
@@ -13,7 +13,7 @@ import org.springframework.ai.chat.client.ChatClient;
  * @description
  * @create 2025/12/19
  */
-public class Step2PrecisionExecutorNode extends AbstractExecuteSupport{
+public class Step2PrecisionExecutorNode extends AbstractExecuteSupport {
     @Override
     protected String doApply(ExecuteCommandEntity requestParameter, DefaultAutoAgentExecuteStrategyFactory.DynamicContext dynamicContext) throws Exception {
         log.info("\n 阶段2: 精准任务执行");

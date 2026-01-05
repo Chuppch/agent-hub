@@ -1,4 +1,4 @@
-package com.chuppch.domain.agent.service.excutor.auto;
+package com.chuppch.domain.agent.service.excutor.auto.step;
 
 import cn.bugstack.wrench.design.framework.tree.AbstractMultiThreadStrategyRouter;
 import com.alibaba.fastjson.JSON;
@@ -6,7 +6,7 @@ import com.chuppch.domain.agent.adapter.repository.IAgentRepository;
 import com.chuppch.domain.agent.model.entity.AutoAgentExecuteResultEntity;
 import com.chuppch.domain.agent.model.entity.ExecuteCommandEntity;
 import com.chuppch.domain.agent.model.valobj.enums.AiAgentEnumVO;
-import com.chuppch.domain.agent.service.excutor.auto.factory.DefaultAutoAgentExecuteStrategyFactory;
+import com.chuppch.domain.agent.service.excutor.auto.step.factory.DefaultAutoAgentExecuteStrategyFactory;
 import jakarta.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

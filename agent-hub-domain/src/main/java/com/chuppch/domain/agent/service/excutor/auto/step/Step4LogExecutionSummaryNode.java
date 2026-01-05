@@ -1,4 +1,4 @@
-package com.chuppch.domain.agent.service.excutor.auto;
+package com.chuppch.domain.agent.service.excutor.auto.step;
 
 import cn.bugstack.wrench.design.framework.tree.StrategyHandler;
 import com.chuppch.domain.agent.model.entity.AutoAgentExecuteResultEntity;
@@ -6,7 +6,7 @@ import com.chuppch.domain.agent.model.entity.ExecuteCommandEntity;
 import com.chuppch.domain.agent.model.valobj.AiAgentClientFlowConfigVO;
 import com.chuppch.domain.agent.model.valobj.enums.AiClientTypeEnumVO;
 import com.chuppch.domain.agent.service.excutor.auto.vo.ExecutionHistoryManager;
-import com.chuppch.domain.agent.service.excutor.auto.factory.DefaultAutoAgentExecuteStrategyFactory;
+import com.chuppch.domain.agent.service.excutor.auto.step.factory.DefaultAutoAgentExecuteStrategyFactory;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.stereotype.Service;
 
