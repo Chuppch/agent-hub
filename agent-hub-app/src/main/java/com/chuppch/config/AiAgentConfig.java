@@ -37,6 +37,7 @@ public class AiAgentConfig {
 
         OpenAiEmbeddingOptions embeddingOptions = OpenAiEmbeddingOptions.builder()
                 .model(embeddingModelName)  // 指定模型名称：text-embedding-v4
+                .dimensions(1536)  // 显式指定维度为 1536，与数据库表 vector_store_openai 的 VECTOR(1536) 定义一致
                 .build();
 
         OpenAiEmbeddingModel embeddingModel =

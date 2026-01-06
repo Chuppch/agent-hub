@@ -3,11 +3,14 @@ package com.chuppch.config;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 
 /**
+ *  TODO 后续需要完善
  * Spring AI 专用Jackson全局配置类
  * 彻底解决：code10(换行符)、code32(空格符)等所有JSON解析异常
  * 优先级最高，Spring AI底层的ModelOptionsUtils会自动使用该配置
@@ -23,6 +26,11 @@ public class SpringAiJacksonGlobalConfig {
     @SuppressWarnings("deprecation") // 抑制deprecated警告，这些配置虽然标记为deprecated但仍然是解决JSON解析问题的关键
     public ObjectMapper objectMapper() {
         ObjectMapper objectMapper = new ObjectMapper();
+        
+        // ========== 注册JSR310模块：支持Java 8时间类型（LocalDateTime等）序列化/反序列化 ==========
+        objectMapper.registerModule(new JavaTimeModule());
+        // 禁用时间戳格式，将LocalDateTime序列化为ISO-8601字符串格式（如"2024-01-01T12:00:00"），前端可正常解析
+        objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         
         // ========== 核心双开关：一次性解决本次+上次的所有JSON解析错误 ==========
         // 开关1：允许JSON字符串中包含【未转义的原生控制字符】(code10换行符、code13回车符等) → 解决上次的报错

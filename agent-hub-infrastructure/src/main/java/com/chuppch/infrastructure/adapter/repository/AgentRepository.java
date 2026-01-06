@@ -634,6 +634,7 @@ public class AgentRepository implements IAgentRepository {
     @Override
     public void createTagOrder(AiRagOrderVO aiRagOrderVO) {
         AiClientRagOrder aiRagOrder = new AiClientRagOrder();
+        aiRagOrder.setRagId(UUID.randomUUID().toString().replace("-", ""));
         aiRagOrder.setRagName(aiRagOrderVO.getRagName());
         aiRagOrder.setKnowledgeTag(aiRagOrderVO.getKnowledgeTag());
         aiRagOrder.setStatus(1);

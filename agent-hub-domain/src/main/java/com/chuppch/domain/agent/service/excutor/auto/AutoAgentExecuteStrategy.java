@@ -6,6 +6,7 @@ import com.chuppch.domain.agent.model.entity.AutoAgentExecuteResultEntity;
 import com.chuppch.domain.agent.model.entity.ExecuteCommandEntity;
 import com.chuppch.domain.agent.service.IExecuteStrategy;
 import com.chuppch.domain.agent.service.excutor.auto.step.factory.DefaultAutoAgentExecuteStrategyFactory;
+import com.chuppch.domain.agent.service.excutor.auto.vo.ExecutionHistoryManager;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyEmitter;
@@ -30,7 +31,7 @@ public class AutoAgentExecuteStrategy implements IExecuteStrategy {
 
         DefaultAutoAgentExecuteStrategyFactory.DynamicContext dynamicContext = new DefaultAutoAgentExecuteStrategyFactory.DynamicContext();
         dynamicContext.setMaxStep(executeCommandEntity.getMaxStep() != null ? executeCommandEntity.getMaxStep() : 3);
-        dynamicContext.setExecutionHistory(new StringBuilder());
+        dynamicContext.setExecutionHistoryManager(new ExecutionHistoryManager());
         dynamicContext.setCurrentTask(executeCommandEntity.getMessage());
         dynamicContext.setValue("emitter", emitter);
 

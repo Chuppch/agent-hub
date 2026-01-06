@@ -7,6 +7,7 @@ import jakarta.annotation.Resource;
 import org.springframework.ai.reader.tika.TikaDocumentReader;
 import org.springframework.ai.transformer.splitter.TokenTextSplitter;
 import org.springframework.ai.vectorstore.pgvector.PgVectorStore;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.ai.document.Document;
 
@@ -17,6 +18,7 @@ import java.util.List;
  * @description
  * @create 2026/1/6
  */
+@Service
 public class RagService implements IRagService {
 
     @Resource
