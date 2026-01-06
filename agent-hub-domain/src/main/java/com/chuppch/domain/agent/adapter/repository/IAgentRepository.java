@@ -124,4 +124,8 @@ public interface IAgentRepository {
      * @return
      */
     AiAgentVO queryAiAgentByAgentId(String aiAgentId);
+
+    // =========== RagService -  rag 数据库操作 ============
+
+    void createTagOrder(AiRagOrderVO aiRagOrderVO);
 }
