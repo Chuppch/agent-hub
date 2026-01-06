@@ -1,6 +1,6 @@
 package com.chuppch.trigger.http.admin;
 
-import com.chuppch.api.IAiClientRagOrderAdminService;
+import com.chuppch.api.admin.IAiClientRagOrderAdminService;
 import com.chuppch.api.dto.AiClientRagOrderQueryRequestDTO;
 import com.chuppch.api.dto.AiClientRagOrderRequestDTO;
 import com.chuppch.api.dto.AiClientRagOrderResponseDTO;
