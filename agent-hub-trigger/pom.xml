@@ -40,6 +40,10 @@
             <groupId>com.chuppch</groupId>
             <artifactId>agent-hub-domain</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.chuppch</groupId>
+            <artifactId>agent-hub-infrastructure</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
