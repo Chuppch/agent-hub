@@ -1,6 +1,6 @@
 package com.chuppch.trigger.http.admin;
 
-import com.chuppch.api.IAiClientAdminService;
+import com.chuppch.api.admin.IAiClientAdminService;
 import com.chuppch.api.dto.AiClientQueryRequestDTO;
 import com.chuppch.api.dto.AiClientRequestDTO;
 import com.chuppch.api.dto.AiClientResponseDTO;
@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 
 import jakarta.annotation.Resource;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.stream.Collectors;
 /**
  * @author chuppch

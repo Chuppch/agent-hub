@@ -1,4 +1,4 @@
-package com.chuppch.api;
+package com.chuppch.api.admin;
 
 import com.chuppch.api.dto.AiClientApiQueryRequestDTO;
 import com.chuppch.api.dto.AiClientApiRequestDTO;
