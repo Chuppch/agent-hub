@@ -1,6 +1,6 @@
 package com.chuppch.trigger.http.admin;
 
-import com.chuppch.api.IAiClientSystemPromptAdminService;
+import com.chuppch.api.admin.IAiClientSystemPromptAdminService;
 import com.chuppch.api.dto.AiClientSystemPromptQueryRequestDTO;
 import com.chuppch.api.dto.AiClientSystemPromptRequestDTO;
 import com.chuppch.api.dto.AiClientSystemPromptResponseDTO;
