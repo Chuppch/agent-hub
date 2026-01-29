@@ -18,7 +18,7 @@ spring:
     # MySQL 配置（业务数据库）- 端口 20001
     mysql:
       driver-class-name: com.mysql.cj.jdbc.Driver
-      url: jdbc:mysql://101.251.176.123:20001/ai-agent-station?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+      url: jdbc:mysql://43.139.213.157:20001/ai-agent-station?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
       username: root
       password: 123456
       hikari:
@@ -33,7 +33,7 @@ spring:
     # PostgreSQL 配置（向量数据库）- 端口 20005
     pgvector:
       driver-class-name: org.postgresql.Driver
-      url: jdbc:postgresql://101.251.176.123:20005/ai-rag-knowledge?tcpKeepAlive=true&socketTimeout=60
+      url: jdbc:postgresql://43.139.213.157:20005/ai-rag-knowledge?tcpKeepAlive=true&socketTimeout=60
       username: postgres
       password: postgres
       hikari:
@@ -50,7 +50,7 @@ spring:
   # Redis 配置
   data:
     redis:
-      host: 101.251.176.123
+      host: 43.139.213.157
       port: 20003
       password: # Redis 无密码
       timeout: 3000
